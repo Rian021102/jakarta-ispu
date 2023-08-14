@@ -7,6 +7,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.ensemble import IsolationForest
 import statsmodels.api as sm
 from statsmodels.tsa.statespace.sarimax import SARIMAX
+from sklearn.preprocessing import StandardScaler
 
 def load_data(pathfile):
     df = pd.read_csv(pathfile)
@@ -66,15 +67,14 @@ def eda(df_ispu):
     imp_mean.fit(df_ispu[['pm10', 'so2', 'co', 'o3', 'no2']])
     df_ispu[['pm10', 'so2', 'co', 'o3', 'no2']] = imp_mean.transform(df_ispu[['pm10', 'so2', 'co', 'o3', 'no2']])
 
-    #remove outliers usong isolation forest
-    clf = IsolationForest(random_state=0).fit(df_ispu[['pm10', 'so2', 'co', 'o3', 'no2']])
-    df_ispu['outlier'] = clf.predict(df_ispu[['pm10', 'so2', 'co', 'o3', 'no2']])
-    df_ispu = df_ispu[df_ispu['outlier'] != -1]
-    df_ispu.drop('outlier', axis=1, inplace=True)
-
+    #remove outlier using IsolationForest
+    clf = IsolationForest(random_state=0, contamination=0.25)
+    clf.fit(df_ispu[['pm10', 'so2', 'co', 'o3', 'no2']])
+    outlier_label = clf.predict(df_ispu[['pm10', 'so2', 'co', 'o3', 'no2']])
+    df_ispu['outlier_label'] = outlier_label
+    df_ispu = df_ispu[df_ispu['outlier_label'] != -1]
+    df_ispu.drop('outlier_label', axis=1, inplace=True)
     
-
-    print(df_ispu.isnull().sum())
 
     return df_ispu
 eda(df_ispu)
@@ -84,6 +84,12 @@ def featuring(df_ispu):
     df_grouped = df_ispu.groupby('tanggal')[['pm10', 'so2', 'co', 'o3', 'no2']].mean().reset_index()
     print(df_grouped.head())
 
+    #cap max value of each feature to 75th percentile
+    #create a function to cap max value
+    def cap_max_value(df, col, cap):
+        df[col] = np.where(df[col] > cap, cap, df[col])
+        return df
+    
     #plot time series for all features into 5 subplots
     fig, axes = plt.subplots(5, 1, figsize=(15, 15))
     axes[0].plot(df_grouped['tanggal'], df_grouped['pm10'])

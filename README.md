@@ -1,0 +1,5 @@
+# Prologue
+In the past few days, both news outlets and social media platforms have been consistently reporting the deteriorating air quality in Jakarta. Headlines such as "Jakarta: The Most Populated City" and "Jakarta Leads in Worst Air Pollution" have understandably raised significant concerns about public health. This alarming situation has captured my attention and motivated me to initiate a project addressing this issue. While the project does not aim to provide direct solutions for pollution reduction, it does present a straightforward approach for air quality prediction based on measurement data. Additionally, it proposes a method for forecasting these measurements several days in advance.
+
+## Project Description
+The primary objective of this project is to offer a user-friendly method for predicting air quality, relying on daily measurement data. Furthermore, the project introduces a means of forecasting these measurements for upcoming days. This innovative approach enables us to anticipate the potential air quality for the next day, week, or even month.
