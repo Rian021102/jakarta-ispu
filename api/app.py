@@ -9,7 +9,7 @@ import pandas as pd
 app = FastAPI()
 
 # Load the saved model
-model = joblib.load("/Users/rianrachmanto/pypro/project/Jakarta-Air-Quality-Prediction/api/model.pkl")
+model = joblib.load("model.pkl")
 
 # Define the routes
 @app.get('/')

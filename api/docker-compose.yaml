@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: rian021102/ispu-api
-    container_name: api_backend
+    container_name: api_backend_ispu
     ports:
       - '8080:8080'
     volumes:
