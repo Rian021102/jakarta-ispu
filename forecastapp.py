@@ -6,7 +6,7 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 def main():
     st.title('Pollutant Forecasting Streamlit App')
     st.subheader('Forecasting Pollutant in Jakarta')
-    filepath = ' ./data/processed/df_processed.csv'
+    filepath = '/data/processed/df_processed.csv'
 
     def load_data(pathfile):
         df_ISPU = pd.read_csv(pathfile)   
