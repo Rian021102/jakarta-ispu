@@ -13,3 +13,5 @@ uvicorn
 gdown
 matplotlib
 seaborn
+statsmodels
+
