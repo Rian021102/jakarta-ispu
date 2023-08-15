@@ -84,6 +84,12 @@ def featuring(df_ispu):
     df_grouped = df_ispu.groupby('tanggal')[['pm10', 'so2', 'co', 'o3', 'no2']].mean().reset_index()
     print(df_grouped.head())
 
+    #cap max value of each feature to 75th percentile
+    #create a function to cap max value
+    def cap_max_value(df, col, cap):
+        df[col] = np.where(df[col] > cap, cap, df[col])
+        return df
+    
     #plot time series for all features into 5 subplots
     fig, axes = plt.subplots(5, 1, figsize=(15, 15))
     axes[0].plot(df_grouped['tanggal'], df_grouped['pm10'])
@@ -99,9 +105,6 @@ def featuring(df_ispu):
     plt.tight_layout()
     plt.show()
     print("last date:", df_grouped.tail())
-    #save df_grouped to csv
-    df_grouped.to_csv('/Users/rianrachmanto/pypro/project/Jakarta-Air-Quality-Prediction/data/processed/df_processed.csv')
-
     return df_grouped
 df_grouped=featuring(df_ispu)
 
@@ -119,18 +122,16 @@ df_pm10, df_so2, df_co, df_o3, df_no2=makenewdf(df_grouped)
 
 
 
-def forecast_pollutant(df, pollutant_column, order=(1, 1, 1), seasonal_order=(1, 1, 0, 12), forecast_steps=30):
-    # Train the SARIMAX model
-    sarima = SARIMAX(df[pollutant_column],
-                    order=order,
-                    seasonal_order=seasonal_order)
-    sarima_fit = sarima.fit()
+def forecast_pollutant_arima(df, pollutant_column, order=(1, 1, 1), forecast_steps=30):
+    # Train the ARIMA model
+    arima = sm.tsa.ARIMA(df[pollutant_column], order=order)
+    arima_fit = arima.fit()
 
     # Get the predictions from the trained model
-    predictions = sarima_fit.predict()
+    predictions = arima_fit.predict()
 
     # Forecast the next `forecast_steps` days based on the predictions
-    forecast_values = sarima_fit.get_forecast(steps=forecast_steps).predicted_mean
+    forecast_values = arima_fit.forecast(steps=forecast_steps)
 
     # Create a DataFrame for the forecasted data (only index, no date)
     forecast_df = pd.DataFrame({
@@ -154,12 +155,12 @@ def forecast_pollutant(df, pollutant_column, order=(1, 1, 1), seasonal_order=(1,
 
 # Example usage
 # Replace df_pm10 with your actual DataFrame and 'pm10' with the respective pollutant column name
-# You can also adjust the order and seasonal_order as needed
-forecast_pollutant(df_pm10, 'pm10', order=(1, 1, 1), seasonal_order=(1, 1, 0, 12), forecast_steps=30)
-forecast_pollutant(df_so2, 'so2', order=(1, 1, 1), seasonal_order=(1, 1, 0, 12), forecast_steps=30)
-forecast_pollutant(df_co, 'co', order=(1, 1, 1), seasonal_order=(1, 1, 0, 12), forecast_steps=30)
-forecast_pollutant(df_o3, 'o3', order=(1, 1, 1), seasonal_order=(1, 1, 0, 12), forecast_steps=30)
-forecast_pollutant(df_no2, 'no2', order=(1, 1, 1), seasonal_order=(1, 1, 0, 12), forecast_steps=30)
+# You can also adjust the order as needed
+forecast_pollutant_arima(df_pm10, 'pm10', order=(1, 1, 1), forecast_steps=30)
+forecast_pollutant_arima(df_so2, 'so2', order=(1, 1, 1), forecast_steps=30)
+forecast_pollutant_arima(df_co, 'co', order=(1, 1, 1), forecast_steps=30)
+forecast_pollutant_arima(df_o3, 'o3', order=(1, 1, 1), forecast_steps=30)
+forecast_pollutant_arima(df_no2, 'no2', order=(1, 1, 1), forecast_steps=30)
 
 
 
