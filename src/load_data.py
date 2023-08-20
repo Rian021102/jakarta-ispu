@@ -3,9 +3,9 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 def load_data(pathfile):
     df = pd.read_csv(pathfile)
-    df_ISPU = df[['tanggal', 'stasiun', 'pm10', 'so2', 'co', 'o3', 'no2','categori']]
-    # Assuming 'df' is your original DataFrame
-
+    
+    
+    df_ISPU = df[['tanggal','stasiun','pm10', 'so2', 'co', 'o3', 'no2','categori']]
     # First, convert 'tanggal' to datetime
     df_ISPU['tanggal'] = pd.to_datetime(df['tanggal'])
 

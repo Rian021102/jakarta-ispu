@@ -2,29 +2,36 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+#import imputer
+from sklearn.impute import SimpleImputer
 
 
 def eda (X_train, y_train, X_test, y_test):
-    #filter all numeric columns
+    
     print(X_train.shape)
     print(y_train.shape)
 
     print(X_train.describe())
+
+    #print X_train, X_test, y_train, y_test data types
+    print('X_train data types: ', X_train.dtypes)
+    print('X_test data types: ', X_test.dtypes)
+    print('y_train data types: ', y_train.dtypes)
+    print('y_test data types: ', y_test.dtypes)
 
     #Check missing values in X_train, X_test, y_train, y_test
     print('Missing values in X_train: ', X_train.isnull().sum().sum())
     print('Missing values in X_test: ', X_test.isnull().sum().sum())
     print('Missing values in y_train: ', y_train.isnull().sum().sum())
     print('Missing values in y_test: ', y_test.isnull().sum().sum())
-   #fill missing values in X_train and X_test with 0
-    X_train = X_train.fillna(0)
-    X_test = X_test.fillna(0)
 
-    #reset index X_train and X_test
-    X_train = X_train.reset_index(drop=True)
-    X_test = X_test.reset_index(drop=True)
+    #check all the columns in X_train and X_test with missing values
+    print('Columns in X_train with missing values: ', X_train.columns[X_train.isnull().any()])
+    print('Columns in X_test with missing values: ', X_test.columns[X_test.isnull().any()])
 
-    X_train_numeric = X_train.select_dtypes(include=[np.number])
+
+    #select all column with numeric data type
+    X_train_numeric = X_train.select_dtypes(include=np.number)
     
 
     plt.figure(figsize=(30,30))
@@ -44,14 +51,7 @@ def eda (X_train, y_train, X_test, y_test):
         plt.title(i)
     plt.show()
 
-#plot box plot for X_train
-    for i in X_train_numeric.columns:
-        plt.figure(figsize=(10,5))
-        plt.boxplot(X_train_numeric[i])
-        plt.title(i)
-    plt.show()
 
-    
     #concat x_train and y_train
     df_train = pd.concat([X_train, y_train], axis=1)
 

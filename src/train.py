@@ -1,13 +1,13 @@
 import pandas as pd
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier
+import xgboost as xgb
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
 import pickle
 
-def train_model(X_train, y_train, X_test, y_test):
+def train_model(X_train,X_test,y_train,y_test):
     # Train model using random forest classifier
-    model = RandomForestClassifier(n_estimators=100, max_depth=5, random_state=1)
+    model = xgb.XGBClassifier()
     model.fit(X_train, y_train)
 
     # Predict using model
