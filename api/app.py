@@ -32,7 +32,7 @@ def predict_loan_csv(file: UploadFile = File(...)):
         prediction = model.predict(input_data)
         if prediction == 0:
             ispu = "BAIK"
-        if prediction == 1:
+        elif prediction == 1:
             ispu="SEDANG"
         else:
             ispu = "TIDAK SEHAT"

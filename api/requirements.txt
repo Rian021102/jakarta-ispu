@@ -10,4 +10,4 @@ numpy
 scikit-learn==1.2.2
 fastapi
 uvicorn
-gdown
+python-multipart
