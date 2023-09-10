@@ -31,11 +31,7 @@ The model was deployed using two methods:
 1. FastAPI hosted on AWS
 Address: http://43.218.104.79:8080
 
-2. Streamlit
-Streamlit was employed to provide a graphical user interface (GUI) for model deployment, enhancing the user experience.
-Address: https://jakarta-air-quality-prediction.streamlit.app/
-
-3. Huggingface with Gradio and FastAPI
+2. Huggingface with Gradio and FastAPI
 Address: https://huggingface.co/spaces/Rianknow/air-quality
 
 
