@@ -18,8 +18,9 @@ def train_model(X_train,X_test,y_train,y_test):
     print('Classification report: \n', classification_report(y_test, y_pred))
 
     # Save model as pickle file
-    filename = 'model.pkl'
-    pickle.dump(model, open(filename, 'wb'))
+    with open('/Users/rianrachmanto/pypro/project/Jakarta-Air-Quality-Prediction/model/model.pkl', 'wb') as f:
+        pickle.dump(model, f)
+    
 
     return {'accuracy_score': accuracy_score,
             'classification_report': classification_report,

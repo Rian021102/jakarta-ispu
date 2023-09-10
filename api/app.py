@@ -4,12 +4,13 @@ import json
 import joblib
 import numpy as np
 import pandas as pd
+import xgboost as xgb
 
 # Create the app object
 app = FastAPI()
 
 # Load the saved model
-model = joblib.load("model.pkl")
+model = joblib.load("/Users/rianrachmanto/pypro/project/Jakarta-Air-Quality-Prediction/model/model.pkl")
 
 # Define the routes
 @app.get('/')
@@ -20,8 +21,8 @@ def index():
 def get_name(name: str):
     return {'Welcome to my ML model': name}
 
-@app.post('/predict_csv')
-def predict_loan_csv(file: UploadFile = File(...)):
+@app.post('/predict_csv For Jakarta Air Quality')
+def predict_airquality(file: UploadFile = File(...)):
     # Read the CSV file
     df = pd.read_csv(file.file)
 

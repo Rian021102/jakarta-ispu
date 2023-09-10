@@ -12,9 +12,6 @@ def load_model():
 
 model = load_model()
 
-def preprocess_data(df):
-    df.drop(['tanggal'], axis=1, inplace=True)
-    return df
 
 def plot(df):
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -29,7 +26,6 @@ def plot(df):
 
 def predict(df):
     df2 = df.copy()
-    df = preprocess_data(df)
     predictions = model.predict(df)
     predictions_labels = ['BAIK' if pred == 0 else 'SEDANG' if pred == 1 else 'TIDAK SEHAT' for pred in predictions]
     df2['Prediction'] = predictions_labels
