@@ -5,12 +5,13 @@ import joblib
 import numpy as np
 import pandas as pd
 import xgboost as xgb
+import os
 
 # Create the app object
 app = FastAPI()
 
 # Load the saved model
-model = joblib.load("/Users/rianrachmanto/pypro/project/Jakarta-Air-Quality-Prediction/api/model.pkl")
+model = joblib.load("model.pkl")
 
 # Define the routes
 @app.get('/')
@@ -42,4 +43,4 @@ def predict_airquality(file: UploadFile = File(...)):
     return {"predictions": predictions}
 
 if __name__ == '__main__':
-    uvicorn.run("app:app", host='127.0.0.1', port=8080)
+    uvicorn.run("app:app", host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
