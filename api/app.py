@@ -10,7 +10,7 @@ import xgboost as xgb
 app = FastAPI()
 
 # Load the saved model
-model = joblib.load("/Users/rianrachmanto/pypro/project/Jakarta-Air-Quality-Prediction/model/model.pkl")
+model = joblib.load("model.pkl")
 
 # Define the routes
 @app.get('/')
