@@ -30,10 +30,9 @@ def feature_eng(X_train, X_test, y_train, y_test):
     X_train = X_train[mask]
     y_train = y_train[mask]
 
-    # Label encoding on y_train and y_test
-    le = LabelEncoder()
-    y_train = le.fit_transform(y_train)
-    y_test = le.transform(y_test)
+    # Directly map labels
+    y_train.replace({'BAIK': 0, 'SEDANG': 1, 'TIDAK SEHAT': 2}, inplace=True)
+    y_test.replace({'BAIK': 0, 'SEDANG': 1, 'TIDAK SEHAT': 2}, inplace=True)
 
     print("After feature engineering:")
     print("X_train shape:", X_train.shape)

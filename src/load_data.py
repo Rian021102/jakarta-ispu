@@ -17,9 +17,10 @@ def load_data(pathfile):
     df_ISPU['no2'] = pd.to_numeric(df['no2'], errors='coerce')
     
     
-    #select where categori is SEDANG, BAIK, TIDAK SEHAT, SANGAT TIDAK SEHAT, BERBAHAYA
+    #select where categori is BAIK to GOOD, SEDANG to FAIR, TIDAK SEHAT to MODERATE, SANGAT TIDAK SEHAT to POOR, BERBAHAYA to VERY POOR
 
     df_ISPU = df_ISPU[df_ISPU['categori'].isin(['SEDANG', 'BAIK', 'TIDAK SEHAT', 'SANGAT TIDAK SEHAT', 'BERBAHAYA'])]
+    #df_ISPU['categori'] = df_ISPU['categori'].replace(['BAIK','SEDANG','TIDAK SEHAT','SANGAT TIDAK SEHAT','BERBAHAYA'],['GOOD','FAIR','MODERATE','POOR','VERY POOR'])
 
     print(df_ISPU.head())
 

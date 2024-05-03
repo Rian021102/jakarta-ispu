@@ -13,6 +13,7 @@ def main():
     X_train,y_train, X_test, y_test = eda(X_train, y_train, X_test, y_test)
 
     X_train, X_test, y_train, y_test = feature_eng(X_train, X_test, y_train, y_test)
+    print(X_train.shape,X_test.shape)
 
     train_model (X_train, X_test, y_train, y_test)
 
